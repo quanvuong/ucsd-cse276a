@@ -415,7 +415,6 @@ def drive_to_pose(speed, num_loop):
 
             run_fwturn(dig_angle)
 
-            # run_action('stop')
             continue
 
         barcode = barcodes[0]
@@ -459,3 +458,4 @@ if __name__ == '__main__':
     print(f'Connection Ok: {conn_ok}')
 
     run_action('stop')
+
