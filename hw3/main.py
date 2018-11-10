@@ -459,38 +459,3 @@ if __name__ == '__main__':
     print(f'Connection Ok: {conn_ok}')
 
     run_action('stop')
-
-    reset_car_state()
-
-    drive_to_pose(speed=25, num_loop=55)
-
-    reset_car_state()
-
-    to_arbitrary_pose([0.3, 1.9, -np.radians(20)], {
-        'time_limit': 4.6,
-        'fixed_timestep': 0.01,
-    })
-
-    reset_car_state()
-
-    drive_to_pose(speed=25, num_loop=55)
-
-    reset_car_state()
-
-    to_arbitrary_pose([0.3, 0.7, np.radians(90)], {
-        'time_limit': 4.5,
-        'fixed_timestep': 0.02,
-    })
-
-    reset_car_state()
-
-    to_arbitrary_pose([0.5, 0, 0], {
-        'time_limit': 2.0,
-        'fixed_timestep': 0.02
-    }, check_for_bar_code=True)
-
-    reset_car_state()
-
-    drive_to_pose(speed=25, num_loop=60)
-
-    run_action('stop')
