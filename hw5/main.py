@@ -73,6 +73,11 @@ def run_fwturn(angle):
 	__request__(url)
 
 
+def turn_camera(angle):
+
+    url = BASE_URL + 'run/?action=fwturn:' + str(angle)
+
+
 def connection_ok():
 	"""Check whetcher connection is ok
 
@@ -455,6 +460,10 @@ def drive_to_pose(speed, num_loop):
 
 if __name__ == '__main__':
 
+    # If area of QR / (300 * 400) is larger than this value
+    # then we assume that the car is able to collide with an obstacle
+    frac_threshold = 0.1
+
     conn_ok = connection_ok()
     print(f'Connection Ok: {conn_ok}')
 
@@ -462,35 +471,62 @@ if __name__ == '__main__':
 
     reset_car_state()
 
-    drive_to_pose(speed=25, num_loop=55)
+    run_action('camnegativex')
 
-    reset_car_state()
+    # run_speed(str(50))
 
-    to_arbitrary_pose([0.3, 1.9, -np.radians(20)], {
-        'time_limit': 4.6,
-        'fixed_timestep': 0.01,
-    })
+    # run_action('forward')
 
-    reset_car_state()
+    # time.sleep(3)
 
-    drive_to_pose(speed=25, num_loop=55)
+    # query_image = QueryImage(HOST)
+    # barcodes, img = query_image.getBarCodes()
 
-    reset_car_state()
+    # print(barcodes)
 
-    to_arbitrary_pose([0.3, 0.7, np.radians(90)], {
-        'time_limit': 4.5,
-        'fixed_timestep': 0.02,
-    })
+    # barcode = barcodes[0]
 
-    reset_car_state()
+    # frame_center = (150, 200)
 
-    to_arbitrary_pose([0.5, 0, 0], {
-        'time_limit': 2.0,
-        'fixed_timestep': 0.02
-    }, check_for_bar_code=True)
+    # (x, y, w, h) = barcode.rect
 
-    reset_car_state()
+    # print(f'x: {x}, y: {y}, w: {w}, {h}')
 
-    drive_to_pose(speed=25, num_loop=60)
+    # QR_frac = (w * h) / (300 * 400)
+
+    # print(f'QR_frac: {QR_frac}')
+
+    # center = (x + w/2.0, y + h/2.0)
+
+    # drive_to_pose(speed=25, num_loop=55)
+
+    # reset_car_state()
+
+    # to_arbitrary_pose([0.3, 1.9, -np.radians(20)], {
+    #     'time_limit': 4.6,
+    #     'fixed_timestep': 0.01,
+    # })
+
+    # reset_car_state()
+
+    # drive_to_pose(speed=25, num_loop=55)
+
+    # reset_car_state()
+
+    # to_arbitrary_pose([0.3, 0.7, np.radians(90)], {
+    #     'time_limit': 4.5,
+    #     'fixed_timestep': 0.02,
+    # })
+
+    # reset_car_state()
+
+    # to_arbitrary_pose([0.5, 0, 0], {
+    #     'time_limit': 2.0,
+    #     'fixed_timestep': 0.02
+    # }, check_for_bar_code=True)
+
+    # reset_car_state()
+
+    # drive_to_pose(speed=25, num_loop=60)
 
     run_action('stop')
