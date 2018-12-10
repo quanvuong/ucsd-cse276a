@@ -460,73 +460,33 @@ def drive_to_pose(speed, num_loop):
 
 if __name__ == '__main__':
 
-    # If area of QR / (300 * 400) is larger than this value
-    # then we assume that the car is able to collide with an obstacle
-    frac_threshold = 0.1
+    start = time.time()
+    speed = 30
 
-    conn_ok = connection_ok()
-    print(f'Connection Ok: {conn_ok}')
+    while True:
+        time.sleep(1)
 
-    run_action('stop')
+        run_speed(str(speed))
 
-    reset_car_state()
+        query_image = QueryImage(HOST)
+        barcodes, img = query_image.getBarCodes()
 
-    run_action('camnegativex')
+        if not barcodes:
+            print('Did not find barcodes')
 
-    # run_speed(str(50))
+            continue
+        else:
+            # Turn the car in a random direction (either extreme left or right)
 
-    # run_action('forward')
+            angle = np.random.choice([-180, 180])
+            dig_angle = int(phy_to_dig_steering_angle(steering_angle))
+            run_fwturn(dig_angle)
 
-    # time.sleep(3)
+            time.sleep(np.random.uniform(low=2.0, high=5.0))
 
-    # query_image = QueryImage(HOST)
-    # barcodes, img = query_image.getBarCodes()
+            reset_car_state()
 
-    # print(barcodes)
+            run_speed(str(speed))
 
-    # barcode = barcodes[0]
 
-    # frame_center = (150, 200)
 
-    # (x, y, w, h) = barcode.rect
-
-    # print(f'x: {x}, y: {y}, w: {w}, {h}')
-
-    # QR_frac = (w * h) / (300 * 400)
-
-    # print(f'QR_frac: {QR_frac}')
-
-    # center = (x + w/2.0, y + h/2.0)
-
-    # drive_to_pose(speed=25, num_loop=55)
-
-    # reset_car_state()
-
-    # to_arbitrary_pose([0.3, 1.9, -np.radians(20)], {
-    #     'time_limit': 4.6,
-    #     'fixed_timestep': 0.01,
-    # })
-
-    # reset_car_state()
-
-    # drive_to_pose(speed=25, num_loop=55)
-
-    # reset_car_state()
-
-    # to_arbitrary_pose([0.3, 0.7, np.radians(90)], {
-    #     'time_limit': 4.5,
-    #     'fixed_timestep': 0.02,
-    # })
-
-    # reset_car_state()
-
-    # to_arbitrary_pose([0.5, 0, 0], {
-    #     'time_limit': 2.0,
-    #     'fixed_timestep': 0.02
-    # }, check_for_bar_code=True)
-
-    # reset_car_state()
-
-    # drive_to_pose(speed=25, num_loop=60)
-
-    run_action('stop')
